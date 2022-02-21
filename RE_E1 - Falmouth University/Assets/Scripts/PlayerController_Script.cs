@@ -14,10 +14,15 @@ public class PlayerController_Script : MonoBehaviour
     public Transform feetPos;
     public float checkRadius;
     public LayerMask ground;
-
     private float jumpTimeCounter;
     public float jumpTime;
     private bool isJumping;
+
+    private void Awake()
+    {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 144;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -35,8 +40,9 @@ public class PlayerController_Script : MonoBehaviour
     void Update()
     {
         isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, ground); // Check if grounded
-        FlipSprite();
+        //FlipSprite();
         JumpAction();
+
     }
 
     private void JumpAction()
@@ -59,7 +65,6 @@ public class PlayerController_Script : MonoBehaviour
             {
                 isJumping = false;
             }
-
         }
 
         if (Input.GetKeyUp(KeyCode.Space))
