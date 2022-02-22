@@ -70,12 +70,19 @@ public class CharacterSwap_Script : MonoBehaviour
     {
         Debug.Log("close enough");
         character = possibleCharacters[whichCharacter];
-        character.GetComponent<PlayerController_Script>().enabled = true; // not going to work - use in other script
+        character.GetComponent<Controller_Script>().enabled = true; // not going to work - use in other script
+
+
+        if (character.GetComponent<CrowController_Script>() != null) // stop following
+        {
+            character.GetComponent<CrowController_Script>().isFollowing = false;
+        }
+        
         for (int i = 0; i < possibleCharacters.Count; i++)
         {
             if (possibleCharacters[i] != character)
             {
-                possibleCharacters[i].GetComponent<PlayerController_Script>().enabled = false;
+                possibleCharacters[i].GetComponent<Controller_Script>().enabled = false;
             }
         }
 

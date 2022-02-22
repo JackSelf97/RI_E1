@@ -2,16 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController_Script : MonoBehaviour
+public class GameManger_Script : MonoBehaviour
 {
-    [SerializeField] private GameObject[] crow = new GameObject[3];
-
-    private void Awake()
-    {
-        QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 144;
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +15,4 @@ public class PlayerController_Script : MonoBehaviour
     {
         
     }
-
-    
 }
