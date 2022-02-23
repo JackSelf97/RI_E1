@@ -353,6 +353,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crow (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 9095225629890854802, guid: cfed48428a0627d4bb29e2b6aa44f627,
+        type: 3}
+      propertyPath: CrowPos
+      value: 
+      objectReference: {fileID: 1516832728}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cfed48428a0627d4bb29e2b6aa44f627, type: 3}
 --- !u!1 &960593782
@@ -608,6 +613,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crow (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 9095225629890854802, guid: cfed48428a0627d4bb29e2b6aa44f627,
+        type: 3}
+      propertyPath: CrowPos
+      value: 
+      objectReference: {fileID: 1114540594}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cfed48428a0627d4bb29e2b6aa44f627, type: 3}
 --- !u!1 &1685038443
@@ -1044,6 +1054,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crow
       objectReference: {fileID: 0}
+    - target: {fileID: 9095225629890854802, guid: cfed48428a0627d4bb29e2b6aa44f627,
+        type: 3}
+      propertyPath: CrowPos
+      value: 
+      objectReference: {fileID: 2007213208}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cfed48428a0627d4bb29e2b6aa44f627, type: 3}
 --- !u!1001 &5658224557009988363

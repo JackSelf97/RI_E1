@@ -36,7 +36,7 @@ public class CharacterSwap_Script : MonoBehaviour
             {
                 whichCharacter -= 1;
             }
-            if (Vector2.Distance(possibleCharacters[whichCharacter].position, character.position) > 5)
+            if (Vector2.Distance(possibleCharacters[whichCharacter].position, character.position) > 20)
             {
                 Debug.Log("too far");
                 whichCharacter = wc;
@@ -56,7 +56,7 @@ public class CharacterSwap_Script : MonoBehaviour
             {
                 whichCharacter += 1;
             }
-            if (Vector2.Distance(possibleCharacters[whichCharacter].position, character.position) > 5)
+            if (Vector2.Distance(possibleCharacters[whichCharacter].position, character.position) > 20)
             {
                 Debug.Log("too far");
                 whichCharacter = wc;
@@ -70,19 +70,31 @@ public class CharacterSwap_Script : MonoBehaviour
     {
         Debug.Log("close enough");
         character = possibleCharacters[whichCharacter];
-        character.GetComponent<Controller_Script>().enabled = true; // not going to work - use in other script
 
-
-        if (character.GetComponent<CrowController_Script>() != null) // stop following
+        if (character.tag == "Player")
         {
-            character.GetComponent<CrowController_Script>().isFollowing = false;
+            character.GetComponent<PlayerController_Script>().enabled = true; // not going to work - use in other script
         }
-        
+        else if (character.tag == "Crow")
+        {
+            character.GetComponent<CrowController_Script>().isFollowing = false;// not going to work - use in other script
+
+        }
+
+
+
         for (int i = 0; i < possibleCharacters.Count; i++)
         {
             if (possibleCharacters[i] != character)
             {
-                possibleCharacters[i].GetComponent<Controller_Script>().enabled = false;
+                if (possibleCharacters[i].tag == "Player")
+                {
+                    possibleCharacters[i].GetComponent<PlayerController_Script>().enabled = false;
+                }
+                else if (possibleCharacters[i].tag == "Crow")
+                {
+                    possibleCharacters[i].GetComponent<CrowController_Script>().isFollowing = true;
+                } 
             }
         }
 

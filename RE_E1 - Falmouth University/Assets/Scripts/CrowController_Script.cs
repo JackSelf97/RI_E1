@@ -2,44 +2,93 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// Follower script
 public class CrowController_Script : MonoBehaviour
 {
-    // Controller
-    private Controller_Script controller;
-
-    // Follower Variables
-    public Transform CrowPos;
+    public float speed;
+    private float moveX;
+    private float moveY;
     private Rigidbody2D myRb;
-    [SerializeField] private float followSpeed = 3;
-    public bool isFollowing = true;
 
-    private void Start()
+    public TextMesh floatingNumber;
+    private float timeLimit = 10;
+
+    public Transform CrowPos;
+    public bool isFollowing = true;
+    [SerializeField] private float followSpeed = 3;
+
+    #region Jumping
+    public float jumpForce;
+    public bool isGrounded;
+    public Transform feetPos;
+    public float checkRadius;
+    public LayerMask ground;
+    private float jumpTimeCounter;
+    public float jumpTime;
+    private bool isJumping;
+
+    #endregion
+
+    private void Awake()
+    {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 144;
+    }
+
+    // Start is called before the first frame update
+    void Start()
     {
         isFollowing = true;
-        controller = GetComponent<Controller_Script>();
         myRb = GetComponent<Rigidbody2D>();
+        Physics2D.IgnoreLayerCollision(9, 9);
+    }
+
+    void FixedUpdate()
+    {
+        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        if (controller.enabled == false && isFollowing == true)
+        isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, ground); // Check if grounded
+                                                                                     //FlipSprite();
+        if (!isFollowing)
         {
-            //transform.position = Vector2.MoveTowards(transform.position, CrowPos.position, speed * Time.deltaTime);
-
-            transform.position = Vector2.MoveTowards(transform.position, new Vector2(CrowPos.position.x, transform.position.y), followSpeed * Time.deltaTime); // crows don't follow on the y-axis
+            timeLimit -= Time.deltaTime;
+            int seconds = (int)timeLimit % 60;
+            floatingNumber.text = seconds.ToString();
+            if (timeLimit <= 0)
+            {
+                Debug.Log("END");
+            }
         }
-            
-        if (myRb.velocity.y < 0 && !controller.enabled) // falling
+
+
+        if (!isFollowing)
         {
-            isFollowing = false;
+            moveX = Input.GetAxisRaw("Horizontal");
+            moveY = Input.GetAxisRaw("Vertical");
+            myRb.velocity = new Vector2(moveX * speed, moveY * speed);
+        }
+        else
+        {
+            myRb.velocity = new Vector2(0, 0); // stops them moving!!!!!!!!!!!
+            transform.position = Vector2.MoveTowards(transform.position, CrowPos.position, followSpeed * Time.deltaTime);
+
         }
 
-        if (myRb.velocity.y == 0 && !controller.enabled)
+    }
+
+    private void FlipSprite()
+    {
+        if (moveX > 0)
         {
-            isFollowing = true;
+            transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        else if (moveX < 0)
+        {
+            transform.eulerAngles = new Vector3(0, 180, 0);
         }
     }
 }
