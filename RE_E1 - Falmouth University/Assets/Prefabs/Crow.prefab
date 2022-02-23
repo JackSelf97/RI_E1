@@ -127,9 +127,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 7
   floatingNumber: {fileID: 8464829816668162767}
-  CrowPos: {fileID: 0}
+  myPos: {fileID: 0}
+  crowPosIndex: 0
   isFollowing: 1
   followSpeed: 5
+  _gMan: {fileID: 0}
   jumpForce: 10
   isGrounded: 0
   feetPos: {fileID: 7255994413238987109}
@@ -285,6 +287,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4166884898108142511, guid: 4da97914a905fe442a0a981080ffdc7e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4da97914a905fe442a0a981080ffdc7e, type: 3}

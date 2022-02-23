@@ -37,16 +37,20 @@ public class PlayerController_Script : MonoBehaviour
 
     void FixedUpdate()
     {
-        moveInput = Input.GetAxisRaw("Horizontal");
-        myRb.velocity = new Vector2(moveInput * speed, myRb.velocity.y);
+        myRb.velocity = new Vector2(moveInput * speed, myRb.velocity.y);/* * Time.fixedDeltaTime;*/
     }
 
     // Update is called once per frame
     void Update()
     {
-        isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, ground); // Check if grounded
+        moveInput = Input.GetAxisRaw("Horizontal");
+
+
         FlipSprite();
-        JumpAction();
+            JumpAction();
+        
+
+        isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, ground); // Check if grounded
     }
 
     private void JumpAction()
