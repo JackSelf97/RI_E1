@@ -96,7 +96,6 @@ public class CrowController_Script : MonoBehaviour
             if (pheonixTime <= 0)
             {
                 isFollowing = true;
-                GetComponent<BoxCollider2D>().enabled = true;
                 GetComponentInChildren<SpriteRenderer>().enabled = true;
                 GetComponentInChildren<MeshRenderer>().enabled = true;
                 timeLimit = 10;
@@ -108,7 +107,7 @@ public class CrowController_Script : MonoBehaviour
                 yScale = 3;
                 transform.localScale = new Vector2(xScale, yScale);
                 shrink = true;
-
+                
                 for (int i = 0; i < _gMan.possibleCharacters.Length; i++)
                 {
                     if (_gMan.possibleCharacters[i].GetComponent<CrowController_Script>().crowPosIndex == crowPosIndex)
@@ -117,7 +116,8 @@ public class CrowController_Script : MonoBehaviour
                         return;
                     }
                 }
-
+                
+                
                 //ChangePos();
                 pheonix = false;
             }
@@ -139,6 +139,10 @@ public class CrowController_Script : MonoBehaviour
             
         }
 
+        if (transform.position == myPos.position)
+        {
+            GetComponent<BoxCollider2D>().enabled = true;
+        }
 
     }
 

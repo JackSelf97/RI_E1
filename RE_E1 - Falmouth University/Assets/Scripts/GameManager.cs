@@ -21,7 +21,28 @@ public class GameManager : MonoBehaviour
 
     public GameObject buttonPanel, startingBarrier;
     private bool inMainMenu;
-    private const int one = 1;
+    private const int two = 2;
+    private bool isPaused;
+    public GameObject canvasUI;
+
+    public GameObject[] checkpoints = new GameObject[5];
+
+    #region Singleton & Awake
+    public static GameManager gMan = null; // should always initilize
+
+    private void Awake()
+    {
+        if (gMan == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            gMan = this;
+        }
+        else if (gMan != null)
+        {
+            Destroy(gameObject); // if its already there destroy it
+        }
+    }
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +74,11 @@ public class GameManager : MonoBehaviour
             sending.Invoke();
             CharacterSwap();
         }     
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
+        }
     }
 
     public void CharacterSwap()
@@ -68,6 +94,11 @@ public class GameManager : MonoBehaviour
         bigCrowCont.enabled = true;
     }
 
+    public void RespawnAtLastCheckpoint()
+    {
+        bigCrowCont.gameObject.transform.position = checkpoints[0].transform.position;
+    }
+
     private void VCamTargets(Transform currentChar)
     {
         vCam.LookAt = currentChar;
@@ -77,13 +108,14 @@ public class GameManager : MonoBehaviour
     public void PlayGame()
     {
         // Disable Buttons and UI
+        Debug.Log("Starting Game...");
         buttonPanel.GetComponent<Animator>().SetBool("StartGame", true);
         StartCoroutine(DelayGameState());
     }
 
     IEnumerator DelayGameState()
     {
-        yield return new WaitForSeconds(one);
+        yield return new WaitForSeconds(two);
         buttonPanel.SetActive(false);
         vCam.enabled = true;
         vCamMM.enabled = false;
@@ -95,5 +127,20 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Quiting...");
         Application.Quit();
+    }
+
+    public void PauseGame()
+    {
+        isPaused = !isPaused;
+        if (isPaused)
+        {
+            Time.timeScale = 0;
+            canvasUI.SetActive(true);
+        }
+        else
+        {
+            Time.timeScale = 1;
+            canvasUI.SetActive(false);
+        }
     }
 }
