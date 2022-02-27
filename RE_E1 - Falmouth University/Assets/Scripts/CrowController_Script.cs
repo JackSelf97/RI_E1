@@ -10,7 +10,7 @@ public class CrowController_Script : MonoBehaviour
     private Rigidbody2D myRb;
 
     public TextMesh floatingNumber;
-    private float timeLimit = 10;
+    public float timeLimit = 10;
 
     public Transform myPos;
     public int crowPosIndex;
@@ -25,16 +25,13 @@ public class CrowController_Script : MonoBehaviour
 
     private bool shrink;
     private float xScale, yScale;
+    private SpriteRenderer mySprite;
 
-    #region Jumping
-    public float jumpForce;
+    #region Ground Checks
     public bool isGrounded;
     public Transform feetPos;
     public float checkRadius;
     public LayerMask ground;
-    private float jumpTimeCounter;
-    public float jumpTime;
-    private bool isJumping;
 
     #endregion
 
@@ -49,9 +46,8 @@ public class CrowController_Script : MonoBehaviour
     {
         isFollowing = true;
         myRb = GetComponent<Rigidbody2D>();
-
+        mySprite = gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
         _gMan.sending += ChangePos;
-
     }
 
     void FixedUpdate()
@@ -60,8 +56,14 @@ public class CrowController_Script : MonoBehaviour
         {
             myRb.velocity = new Vector2(0, 0);
             transform.position = Vector2.MoveTowards(transform.position, myPos.position, followSpeed * Time.deltaTime);
-        }
 
+            // Flips sprite
+            GameObject bigCrow = _gMan.bigCrowCont.gameObject;
+            if (bigCrow.transform.eulerAngles == new Vector3(0f, 0f, 0f))
+                mySprite.flipX = true;
+            else if (bigCrow.transform.eulerAngles == new Vector3(0f, 180f, 0f))
+                mySprite.flipX = false;
+        }
     }
 
     // Update is called once per frame
@@ -128,7 +130,6 @@ public class CrowController_Script : MonoBehaviour
         {
             xScale -= Time.deltaTime;
             yScale -= Time.deltaTime;
-
             transform.localScale = new Vector2(xScale, yScale);
 
             if (yScale <= 1)
@@ -137,14 +138,13 @@ public class CrowController_Script : MonoBehaviour
                 yScale = 1;
                 shrink = false;
             }
-            
         }
 
+        // Stops from colliding into walls on return
         if (transform.position == myPos.position)
         {
             GetComponent<BoxCollider2D>().enabled = true;
         }
-
     }
 
     public void ChangePos()
@@ -162,11 +162,11 @@ public class CrowController_Script : MonoBehaviour
     {
         if (moveX > 0)
         {
-            transform.eulerAngles = new Vector3(0, 0, 0);
+            mySprite.flipX = true;
         }
         else if (moveX < 0)
         {
-            transform.eulerAngles = new Vector3(0, 180, 0);
+            mySprite.flipX = false;
         }
     }
 }

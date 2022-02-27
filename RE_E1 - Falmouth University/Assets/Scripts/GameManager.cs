@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
 
     public CinemachineVirtualCamera vCam, vCamMM;
     public PlayerController_Script bigCrowCont;
-    public bool isAlive;
 
     public delegate void SendCrow();
     public SendCrow sending;
@@ -30,8 +29,10 @@ public class GameManager : MonoBehaviour
     public Text timesDied, crowsLost;
     public int timesDiedNo, crowsLostNo;
 
+    // Checkpoints
     public GameObject[] checkpoints = new GameObject[5];
-    public GameObject currrentCheckpoint;
+    public GameObject currentCheckpoint;
+    public bool isAlive;
 
     #region Singleton & Awake
     public static GameManager gMan = null; // should always initilize
@@ -75,6 +76,7 @@ public class GameManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Q) && currentCharacter == null && inMainMenu == false)
             {
+                bigCrowCont.HaltMovement();
                 var crow = crowQueue.Dequeue();
                 currentCharacter = crow;
                 var crowCont = crow.GetComponent<CrowController_Script>();
@@ -108,7 +110,7 @@ public class GameManager : MonoBehaviour
     {
         canvasDeath.enabled = true;
         isAlive = false;
-        bigCrowCont.gameObject.transform.position = currrentCheckpoint.transform.position;
+        bigCrowCont.gameObject.transform.position = currentCheckpoint.transform.position;
         timesDied.text = "Times Died: " + timesDiedNo;
         crowsLost.text = "Crows Lost: " + crowsLostNo;
     }
@@ -160,8 +162,46 @@ public class GameManager : MonoBehaviour
 
     public void LoadLastCheckpoint()
     {
-        canvasDeath.enabled = false;
-        isAlive = true;
+        if (currentCheckpoint == null)
+        {
+            PauseGame();
+            return;
+        }
+
+        if (!isPaused)
+        {
+            canvasDeath.enabled = false;
+            bigCrowCont.gameObject.transform.position = currentCheckpoint.transform.position;
+            isAlive = true;
+            return;
+        }
+
+        ClassicRespawn();
     }
 
+    public void Restart()
+    {
+        if (inMainMenu)
+        {
+            PauseGame();
+            return;
+        }
+
+        currentCheckpoint = checkpoints[0]; // first checkpoint
+        timesDiedNo = 0;
+        crowsLostNo = 0;
+        ClassicRespawn();
+    }
+
+    public void VictoryState()
+    {
+        canvasDeath.enabled = true;
+        canvasDeath.GetComponentInChildren<VictoryText_Script>().enabled = true;
+    }
+
+    private void ClassicRespawn()
+    {
+        PauseGame();
+        bigCrowCont.gameObject.transform.position = currentCheckpoint.transform.position;
+    }
 }

@@ -37,7 +37,10 @@ public class PlayerController_Script : MonoBehaviour
 
     void FixedUpdate()
     {
-        myRb.velocity = new Vector2(moveInput * speed, myRb.velocity.y);/* * Time.fixedDeltaTime;*/
+        if (GameManager.gMan.isAlive)
+            myRb.velocity = new Vector2(moveInput * speed, myRb.velocity.y);
+        else if (!GameManager.gMan.isAlive)
+            HaltMovement();
     }
 
     // Update is called once per frame
@@ -92,4 +95,8 @@ public class PlayerController_Script : MonoBehaviour
         }
     }
 
+    public void HaltMovement()
+    {
+        myRb.velocity = new Vector2(0, 0);
+    }
 }
