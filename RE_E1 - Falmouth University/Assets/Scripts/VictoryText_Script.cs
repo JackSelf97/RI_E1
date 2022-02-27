@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class VictoryText_Script : MonoBehaviour
 {
     public Transform[] children;
-    private float timer, timeLimit = 1;
+    private float timer, timeLimit = 0.5f;
     public bool colourSwitch;
     public Text SMG;
 

@@ -120,7 +120,6 @@ public class CrowController_Script : MonoBehaviour
                     }
                 }
                 
-                
                 //ChangePos();
                 pheonix = false;
             }

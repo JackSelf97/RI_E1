@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
     {
         if (isAlive)
         {
-            if (Input.GetKeyDown(KeyCode.Q) && currentCharacter == null && inMainMenu == false)
+            if (Input.GetKeyDown(KeyCode.E) && currentCharacter == null && inMainMenu == false)
             {
                 bigCrowCont.HaltMovement();
                 var crow = crowQueue.Dequeue();
