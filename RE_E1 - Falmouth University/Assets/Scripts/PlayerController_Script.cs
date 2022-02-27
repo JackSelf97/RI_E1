@@ -43,14 +43,13 @@ public class PlayerController_Script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        moveInput = Input.GetAxisRaw("Horizontal");
-
-
-        FlipSprite();
+        if (GameManager.gMan.isAlive)
+        {
+            isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, ground); // Check if grounded
+            moveInput = Input.GetAxisRaw("Horizontal");
+            FlipSprite();
             JumpAction();
-        
-
-        isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, ground); // Check if grounded
+        }
     }
 
     private void JumpAction()

@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 
     public CinemachineVirtualCamera vCam, vCamMM;
     public PlayerController_Script bigCrowCont;
+    public bool isAlive;
 
     public delegate void SendCrow();
     public SendCrow sending;
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
     public int timesDiedNo, crowsLostNo;
 
     public GameObject[] checkpoints = new GameObject[5];
+    public GameObject currrentCheckpoint;
 
     #region Singleton & Awake
     public static GameManager gMan = null; // should always initilize
@@ -52,6 +54,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         inMainMenu = true;
+        isAlive = true;
 
         for (int i = 0; i < possibleCharacters.Length; i++)
         {
@@ -68,20 +71,23 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && currentCharacter == null && inMainMenu == false)
+        if (isAlive)
         {
-            var crow = crowQueue.Dequeue();
-            currentCharacter = crow;
-            var crowCont = crow.GetComponent<CrowController_Script>();
-            crowCont.isFollowing = false;
-            bigCrowCont.enabled = false;
-            sending.Invoke();
-            CharacterSwap();
-        }     
+            if (Input.GetKeyDown(KeyCode.Q) && currentCharacter == null && inMainMenu == false)
+            {
+                var crow = crowQueue.Dequeue();
+                currentCharacter = crow;
+                var crowCont = crow.GetComponent<CrowController_Script>();
+                crowCont.isFollowing = false;
+                bigCrowCont.enabled = false;
+                sending.Invoke();
+                CharacterSwap();
+            }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            PauseGame();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseGame();
+            }
         }
     }
 
@@ -101,7 +107,8 @@ public class GameManager : MonoBehaviour
     public void RespawnAtLastCheckpoint()
     {
         canvasDeath.enabled = true;
-        bigCrowCont.gameObject.transform.position = checkpoints[0].transform.position;
+        isAlive = false;
+        bigCrowCont.gameObject.transform.position = currrentCheckpoint.transform.position;
         timesDied.text = "Times Died: " + timesDiedNo;
         crowsLost.text = "Crows Lost: " + crowsLostNo;
     }
@@ -151,5 +158,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void LoadLastCheckpoint()
+    {
+        canvasDeath.enabled = false;
+        isAlive = true;
+    }
 
 }

@@ -68,7 +68,7 @@ public class CrowController_Script : MonoBehaviour
     void Update()
     {
         isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, ground); // Check if grounded
-        //FlipSprite();
+        FlipSprite();
 
         if (!isFollowing && !pheonix)
         {
