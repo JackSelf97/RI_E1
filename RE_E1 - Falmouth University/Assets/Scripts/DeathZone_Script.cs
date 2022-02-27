@@ -9,6 +9,7 @@ public class DeathZone_Script : MonoBehaviour
         if (collision.gameObject.layer == 9)
         {
             // Kill player
+            GameManager.gMan.timesDiedNo++;
             GameManager.gMan.RespawnAtLastCheckpoint();
         }
     }

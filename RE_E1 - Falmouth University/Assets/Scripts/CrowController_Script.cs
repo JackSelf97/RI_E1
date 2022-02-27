@@ -85,6 +85,7 @@ public class CrowController_Script : MonoBehaviour
                 GetComponent<BoxCollider2D>().enabled = false;
                 GetComponentInChildren<SpriteRenderer>().enabled = false;
                 GetComponentInChildren<MeshRenderer>().enabled = false;
+                GameManager.gMan.crowsLostNo++;
                 pheonixTime = 5;
                 pheonix = true;
             }

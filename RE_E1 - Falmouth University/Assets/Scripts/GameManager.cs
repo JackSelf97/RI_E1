@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,6 +25,9 @@ public class GameManager : MonoBehaviour
     private const int two = 2;
     private bool isPaused;
     public GameObject canvasUI;
+    public Canvas canvasDeath;
+    public Text timesDied, crowsLost;
+    public int timesDiedNo, crowsLostNo;
 
     public GameObject[] checkpoints = new GameObject[5];
 
@@ -96,7 +100,10 @@ public class GameManager : MonoBehaviour
 
     public void RespawnAtLastCheckpoint()
     {
+        canvasDeath.enabled = true;
         bigCrowCont.gameObject.transform.position = checkpoints[0].transform.position;
+        timesDied.text = "Times Died: " + timesDiedNo;
+        crowsLost.text = "Crows Lost: " + crowsLostNo;
     }
 
     private void VCamTargets(Transform currentChar)
@@ -143,4 +150,6 @@ public class GameManager : MonoBehaviour
             canvasUI.SetActive(false);
         }
     }
+
+
 }
