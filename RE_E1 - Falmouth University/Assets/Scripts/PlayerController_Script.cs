@@ -62,6 +62,7 @@ public class PlayerController_Script : MonoBehaviour
             isJumping = true;
             jumpTimeCounter = jumpTime;
             myRb.velocity = Vector2.up * jumpForce;
+            FindObjectOfType<AudioManager>().PlaySound("Jump");
         }
 
         if (Input.GetKey(KeyCode.Space) && isJumping == true)

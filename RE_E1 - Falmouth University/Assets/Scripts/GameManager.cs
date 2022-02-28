@@ -108,6 +108,7 @@ public class GameManager : MonoBehaviour
 
     public void RespawnAtLastCheckpoint()
     {
+        FindObjectOfType<AudioManager>().PlaySound("Damage");
         canvasDeath.enabled = true;
         isAlive = false;
         bigCrowCont.gameObject.transform.position = currentCheckpoint.transform.position;
@@ -203,5 +204,10 @@ public class GameManager : MonoBehaviour
     {
         PauseGame();
         bigCrowCont.gameObject.transform.position = currentCheckpoint.transform.position;
+    }
+
+    public void PlayHoverUIButtonSound()
+    {
+        FindObjectOfType<AudioManager>().PlaySound("UI_Hover");
     }
 }
