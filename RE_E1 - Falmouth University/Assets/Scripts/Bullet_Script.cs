@@ -15,7 +15,7 @@ public class Bullet_Script : MonoBehaviour
         
     }
 
-    void Update()
+    void FixedUpdate()
     {
         transform.Rotate(Vector3.forward * speed);
     }
