@@ -11,14 +11,28 @@ public class Bullet_Script : MonoBehaviour
     void Start()
     {
         myRb = GetComponent<Rigidbody2D>();
-        myRb.velocity = new Vector2(-speed, myRb.velocity.y);
+        myRb.velocity = new Vector2(speed, myRb.velocity.y);
+        
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void Update()
     {
-        if (collision.gameObject.layer == 9)
+        transform.Rotate(Vector3.forward * speed);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
         {
-            //GameManager.gMan.TakeDamage();
+            // Kill player
+            GameManager.gMan.timesDiedNo++;
+            GameManager.gMan.RespawnAtLastCheckpoint();
+        }
+        if (collision.gameObject.tag == "Crow")
+        {
+            // Kill Crow
+            GameManager.gMan.crowsLostNo++;
+            collision.GetComponent<CrowController_Script>().timeLimit = 0;
         }
 
         Destroy(gameObject);

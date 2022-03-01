@@ -11,6 +11,7 @@ public class Checkpoint_Script : MonoBehaviour
         FinishLine,
         Spikes,
         Lever_1,
+        Lever_2,
     }
 
     public Landmarks point;
@@ -51,7 +52,15 @@ public class Checkpoint_Script : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
-
+        else if (point == Landmarks.Lever_2)
+        {
+            if (collision.gameObject.tag == "Crow")
+            {
+                // Disable barrier
+                GameManager.gMan.barriers[1].SetActive(false);
+                gameObject.SetActive(false);
+            }
+        }
     }
 
     IEnumerator DelayDeath()

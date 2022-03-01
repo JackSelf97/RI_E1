@@ -30,8 +30,8 @@ public class GameManager : MonoBehaviour
     public int timesDiedNo, crowsLostNo;
 
     // Checkpoints
-    public GameObject[] checkpoints = new GameObject[5];
-    public GameObject[] barriers = new GameObject[5];
+    public GameObject[] checkpoints = new GameObject[4];
+    public GameObject[] barriers = new GameObject[2];
     public GameObject currentCheckpoint;
     public bool isAlive;
 
