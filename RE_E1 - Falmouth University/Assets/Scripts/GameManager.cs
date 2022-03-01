@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
 
     // Checkpoints
     public GameObject[] checkpoints = new GameObject[5];
+    public GameObject[] barriers = new GameObject[5];
     public GameObject currentCheckpoint;
     public bool isAlive;
 
@@ -91,6 +92,11 @@ public class GameManager : MonoBehaviour
                 PauseGame();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            LoadLastCheckpoint();
+        }
     }
 
     public void CharacterSwap()
@@ -109,6 +115,7 @@ public class GameManager : MonoBehaviour
     public void RespawnAtLastCheckpoint()
     {
         FindObjectOfType<AudioManager>().PlaySound("Damage");
+        Debug.Log("I should be called once");
         canvasDeath.enabled = true;
         isAlive = false;
         bigCrowCont.gameObject.transform.position = currentCheckpoint.transform.position;
@@ -165,11 +172,13 @@ public class GameManager : MonoBehaviour
     {
         if (currentCheckpoint == null)
         {
-            PauseGame();
+            if (isPaused)
+                PauseGame();
+
             return;
         }
 
-        if (!isPaused)
+        if (!isPaused || !isAlive)
         {
             canvasDeath.enabled = false;
             bigCrowCont.gameObject.transform.position = currentCheckpoint.transform.position;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CrowController_Script : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class CrowController_Script : MonoBehaviour
     private float moveY;
     private Rigidbody2D myRb;
 
-    public TextMesh floatingNumber;
+    public Text floatingNumber;
     public float timeLimit = 10;
 
     public Transform myPos;
@@ -84,9 +85,9 @@ public class CrowController_Script : MonoBehaviour
             if (timeLimit <= 0)
             {
                 _gMan.EmptyCurrentCharacter();
-                GetComponent<BoxCollider2D>().enabled = false;
+                GetComponent<CapsuleCollider2D>().enabled = false;
                 GetComponentInChildren<SpriteRenderer>().enabled = false;
-                GetComponentInChildren<MeshRenderer>().enabled = false;
+                GetComponentInChildren<Text>().enabled = false;
                 GameManager.gMan.crowsLostNo++;
                 pheonixTime = 5;
                 pheonix = true;
@@ -100,7 +101,7 @@ public class CrowController_Script : MonoBehaviour
             {
                 isFollowing = true;
                 GetComponentInChildren<SpriteRenderer>().enabled = true;
-                GetComponentInChildren<MeshRenderer>().enabled = true;
+                GetComponentInChildren<Text>().enabled = true;
                 timeLimit = 10;
                 floatingNumber.text = timeLimit.ToString();
                 _gMan.crowQueue.Enqueue(gameObject);
@@ -142,7 +143,7 @@ public class CrowController_Script : MonoBehaviour
         // Stops from colliding into walls on return
         if (transform.position == myPos.position)
         {
-            GetComponent<BoxCollider2D>().enabled = true;
+            GetComponent<CapsuleCollider2D>().enabled = true;
         }
     }
 

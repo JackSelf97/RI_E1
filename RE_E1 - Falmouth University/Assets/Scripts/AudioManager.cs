@@ -23,7 +23,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        PlaySound("Theme"); // Looping theme music
+        PlaySound("Intro"); // Looping theme music
     }
 
     public void PlaySound(string name)

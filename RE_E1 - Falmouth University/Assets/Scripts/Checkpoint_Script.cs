@@ -9,6 +9,8 @@ public class Checkpoint_Script : MonoBehaviour
     {
         Checkpoint,
         FinishLine,
+        Spikes,
+        Lever_1,
     }
 
     public Landmarks point;
@@ -20,6 +22,7 @@ public class Checkpoint_Script : MonoBehaviour
             if (collision.gameObject.tag == "Player")
             {
                 GameManager.gMan.currentCheckpoint = gameObject;
+                gameObject.transform.GetComponentInChildren<TextMesh>().color = Color.green;
             }
         }
         else if (point == Landmarks.FinishLine)
@@ -30,5 +33,34 @@ public class Checkpoint_Script : MonoBehaviour
                 GameManager.gMan.VictoryState();
             }
         }
+        else if (point == Landmarks.Spikes)
+        {
+            if (collision.gameObject.tag == "Player")
+            {
+                // Show Spikes
+                GetComponent<SpriteRenderer>().enabled = true;
+                StartCoroutine(DelayDeath());
+            }
+        }
+        else if (point == Landmarks.Lever_1)
+        {
+            if (collision.gameObject.tag == "Crow")
+            {
+                // Disable barrier
+                GameManager.gMan.barriers[0].SetActive(false);
+                gameObject.SetActive(false);
+            }
+        }
+
+    }
+
+    IEnumerator DelayDeath()
+    {
+        yield return new WaitForSeconds(0.2f);
+        
+        // Kill player
+        GameManager.gMan.timesDiedNo++;
+        GameManager.gMan.RespawnAtLastCheckpoint();
+        GetComponent<SpriteRenderer>().enabled = false;
     }
 }
