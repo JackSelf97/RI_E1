@@ -118,7 +118,6 @@ public class GameManager : MonoBehaviour
     public void RespawnAtLastCheckpoint()
     {
         FindObjectOfType<AudioManager>().PlaySound("Damage");
-        Debug.Log("I should be called once");
         canvasDeath.enabled = true;
         isAlive = false;
         bigCrowCont.gameObject.transform.position = currentCheckpoint.transform.position;
